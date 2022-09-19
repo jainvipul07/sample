@@ -1,10 +1,28 @@
-		<footer>
-			{{ if and .Params.comments (gt (len .Site.DisqusShortname) 0) }}
-            <figure class="article-discussion">
-              {{ template "_internal/disqus.html" . }}
-            </figure>
-			{{ end }}
-			<span>
-			&copy; <time datetime="{{ now }}">{{ now.Format "2006" }}</time> {{ .Site.Author.name }}. {{ i18n "generator" | safeHTML }}
-			</span>
-		</footer>
+	<div class="footer wrapper">
+  <nav class="nav">
+    <div>
+      {{ dateFormat "2006" now }} {{ with .Site.Copyright }} {{ . | safeHTML }}
+      | {{ end }} <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on
+      <a href="https://gohugo.io">Hugo</a>
+    </div>
+  </nav>
+</div>
+
+{{ template "_internal/google_analytics_async.html" . }} {{- with
+.Site.Params.Social -}}
+<script>
+  feather.replace();
+</script>
+{{- end -}}
+
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', (user) => {
+      if (!user) {
+        window.netlifyIdentity.on('login', () => {
+          document.location.href = '/admin/';
+        });
+      }
+    });
+  }
+</script>
